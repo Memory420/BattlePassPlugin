@@ -12,7 +12,8 @@ public class BattlePassPlugin extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-        getCommand("bp").setExecutor(new BPCommand());
+        getCommand("bp").setExecutor(new BPCommand(this));
+        getCommand("bp").setTabCompleter(new BPTabCompleter());
         getLogger().info("BattlePassPlugin enabled!");
     }
 
@@ -26,5 +27,6 @@ public class BattlePassPlugin extends JavaPlugin implements Listener {
         String version = getDescription().getVersion();
         e.getPlayer().sendMessage(ChatColor.DARK_AQUA + "💡 Current version: " + version);
     }
+
 
 }
