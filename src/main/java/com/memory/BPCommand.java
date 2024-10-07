@@ -12,7 +12,6 @@ public class BPCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            player.sendMessage(ChatColor.GREEN + "Opening Battle Pass menu...");
             openMenu(player);
         } else {
             sender.sendMessage(ChatColor.RED + "This command can only be used by a player.");
@@ -21,6 +20,6 @@ public class BPCommand implements CommandExecutor {
     }
 
     private void openMenu(Player player) {
-
+        player.sendMessage("'Открылось меню'");
     }
 }
