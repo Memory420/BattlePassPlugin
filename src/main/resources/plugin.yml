@@ -1,6 +1,6 @@
 name: BattlePassPlugin
 main: com.memory.BattlePassPlugin
-version: 1.10
+version: 1.12
 api-version: 1.19
 commands:
   bp:
