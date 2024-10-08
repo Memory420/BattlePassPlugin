@@ -19,6 +19,7 @@ public class BPTabCompleter implements TabCompleter {
                 suggestions.add("help");
                 suggestions.add("info");
                 suggestions.add("rewards");
+                suggestions.add("reload");
             }
         }
         return suggestions;

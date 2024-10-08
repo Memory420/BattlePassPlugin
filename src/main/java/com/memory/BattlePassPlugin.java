@@ -19,11 +19,11 @@ public class BattlePassPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         getLogger().info("BattlePass plugin is running...");
         battlePassManager = new BattlePassManager(BattlePassConfigLoader.loadRewards("BattlePassRewards.yml"));
-        for (Reward reward : battlePassManager.rewardList){
+        for (Reward reward : battlePassManager.getRewardList()){
             getLogger().info(reward.toString());
         }
         getLogger().info("BP configuration loaded!");
-        getCommand("bp").setExecutor(new BPCommand(this));
+        getCommand("bp").setExecutor(new BPCommand(this, battlePassManager));
         getCommand("bp").setTabCompleter(new BPTabCompleter());
 
     }

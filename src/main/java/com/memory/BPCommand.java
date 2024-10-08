@@ -18,8 +18,10 @@ import org.bukkit.inventory.ItemStack;
 public class BPCommand implements CommandExecutor, Listener {
 
     private final BattlePassPlugin plugin;
+    private BattlePassManager battlePassManager;
 
-    public BPCommand(BattlePassPlugin plugin) {
+    public BPCommand(BattlePassPlugin plugin, BattlePassManager bpn) {
+        this.battlePassManager = bpn;
         this.plugin = plugin;
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -53,11 +55,12 @@ public class BPCommand implements CommandExecutor, Listener {
                 case "rewards":
                     BattlePassManager manager = plugin.getBattlePassManager();
                     player.sendMessage(ChatColor.DARK_GREEN + "Текущие награды БП");
-                    for (Reward reward : manager.rewardList){
+                    for (Reward reward : manager.getRewardList()){
                         player.sendMessage(reward.toString());
                     }
                     break;
-
+                case "reload":
+                    battlePassManager.getRewardList() =
                 default:
                     player.sendMessage(ChatColor.RED + "Неизвестная подкоманда. Используйте /bp help для списка команд.");
                     break;
@@ -72,12 +75,10 @@ public class BPCommand implements CommandExecutor, Listener {
     private void openMenu(Player player) {
         Inventory inventory = Bukkit.createInventory(player, 27, ChatColor.GOLD + "Battle Pass Menu");
 
-        ItemStack item1 = new ItemStack(Material.APPLE, 4);
-        ItemStack item2 = new ItemStack(Material.OAK_LOG, 16);
-
-        inventory.setItem(9, item1);
-        inventory.setItem(10, item2);
-
+        for (Reward reward : battlePassManager.getRewardList()){
+            ItemStack item = new ItemStack(reward.rewardItem.getType(), reward.rewardAmount);
+            inventory.setItem(8 + reward.level, item);
+        }
         player.openInventory(inventory);
     }
 

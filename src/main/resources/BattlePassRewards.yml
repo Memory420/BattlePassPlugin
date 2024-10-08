@@ -10,3 +10,8 @@ rewards:
       reward:
         - material: OAK_LOG
           amount: 10
+    3:
+      xp: 200
+      reward:
+        - material: DIAMOND
+          amount: 5

@@ -14,11 +14,6 @@ public class BattlePassConfigLoader {
 
     private BattlePassManager battlePassManager;
 
-    public static void main(String[] args) {
-        BattlePassManager battlePassManager1 = new BattlePassManager(loadRewards("BattlePassRewards.yml"));
-        battlePassManager1.listRewards();
-    }
-
     public BattlePassConfigLoader(BattlePassManager battlePassManager) {
         this.battlePassManager = battlePassManager;
     }
@@ -51,7 +46,7 @@ public class BattlePassConfigLoader {
                     Material material = Material.getMaterial(materialName);
                     if (material != null) {
                         ItemStack rewardItem = new ItemStack(material, amount);
-                        Reward reward = new Reward(xp, rewardItem, amount);
+                        Reward reward = new Reward(level, xp, rewardItem, amount);
                         rewardsList.add(reward);
                     } else {
                         System.out.println("Неизвестный материал: " + materialName);

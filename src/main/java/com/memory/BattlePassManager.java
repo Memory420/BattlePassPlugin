@@ -3,7 +3,15 @@ package com.memory;
 import java.util.List;
 
 public class BattlePassManager {
-    public List<Reward> rewardList;
+    public List<Reward> getRewardList() {
+        return rewardList;
+    }
+
+    public void setRewardList(List<Reward> rewardList) {
+        this.rewardList = rewardList;
+    }
+
+    private List<Reward> rewardList;
 
     public BattlePassManager(List<Reward> rewardList) {
         this.rewardList = rewardList;
