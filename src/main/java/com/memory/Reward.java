@@ -12,4 +12,13 @@ public class Reward {
         this.rewardItem = rewardItem;
         this.rewardAmount = rewardAmount;
     }
+
+    @Override
+    public String toString() {
+        return "Reward{" +
+                "xp=" + xp +
+                ", rewardItem=" + rewardItem +
+                ", rewardAmount=" + rewardAmount +
+                '}';
+    }
 }

@@ -8,4 +8,9 @@ public class BattlePassManager {
     public BattlePassManager(List<Reward> rewardList) {
         this.rewardList = rewardList;
     }
+    public void listRewards(){
+        for (Reward reward : rewardList){
+            reward.toString();
+        }
+    }
 }
