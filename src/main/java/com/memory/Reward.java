@@ -15,10 +15,10 @@ public class Reward {
 
     @Override
     public String toString() {
-        return "Reward{" +
+        return "Reward {" +
                 "xp=" + xp +
-                ", rewardItem=" + rewardItem +
-                ", rewardAmount=" + rewardAmount +
+                ", rewardItem = " + rewardItem +
+                ", rewardAmount = " + rewardAmount +
                 '}';
     }
 }

@@ -21,7 +21,6 @@ public class BPCommand implements CommandExecutor, Listener {
 
     public BPCommand(BattlePassPlugin plugin) {
         this.plugin = plugin;
-        // Регистрируем обработчик событий
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
@@ -49,6 +48,14 @@ public class BPCommand implements CommandExecutor, Listener {
                     player.sendMessage(ChatColor.AQUA + "/bp menu - Открывает BP меню");
                     player.sendMessage(ChatColor.AQUA + "/bp info - Отображает информацию о команде");
                     player.sendMessage(ChatColor.AQUA + "/bp help - Отображает справочник команды");
+                    break;
+
+                case "rewards":
+                    BattlePassManager manager = plugin.getBattlePassManager();
+                    player.sendMessage(ChatColor.DARK_GREEN + "Текущие награды БП");
+                    for (Reward reward : manager.rewardList){
+                        player.sendMessage(reward.toString());
+                    }
                     break;
 
                 default:
