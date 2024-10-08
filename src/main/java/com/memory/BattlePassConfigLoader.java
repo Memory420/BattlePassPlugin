@@ -15,27 +15,31 @@ public class BattlePassConfigLoader {
 
     public static void main(String[] args) {
         BattlePassManager battlePassManager1 = new BattlePassManager(loadRewards("BattlePassRewards.yml"));
-        for (Reward reward : battlePassManager1.rewardList){
-            reward.toString();
-        }
+        battlePassManager1.listRewards();
     }
+
     public BattlePassConfigLoader(BattlePassManager battlePassManager) {
         this.battlePassManager = battlePassManager;
     }
-    public static List<Reward> loadRewards(String config){
-        List<Reward> rewardsList = new ArrayList<Reward>();
+
+    public static List<Reward> loadRewards(String config) {
+        List<Reward> rewardsList = new ArrayList<>();
         Yaml yaml = new Yaml();
-        try (InputStream inputStream = BattlePassConfigLoader.class.getClassLoader().getResourceAsStream(config)){
-            if (inputStream == null){
+
+        try (InputStream inputStream = BattlePassConfigLoader.class.getClassLoader().getResourceAsStream(config)) {
+            if (inputStream == null) {
                 System.out.println("Файл не найден!");
                 return new ArrayList<>();
             }
+
             Map<String, Object> data = yaml.load(inputStream);
             Map<String, Object> rewardsData = (Map<String, Object>) data.get("rewards");
-            Map<String, Object> levels = (Map<String, Object>) rewardsData.get("levels");
+            Map<Object, Object> levels = (Map<Object, Object>) rewardsData.get("levels");
 
-            for (String levelKey : levels.keySet()){
-                Map<String, Object> levelData = (Map<String, Object>) levels.get(levelKey);
+            for (Map.Entry<Object, Object> entry : levels.entrySet()) {
+                int level = (int) entry.getKey();
+                Map<String, Object> levelData = (Map<String, Object>) entry.getValue();
+
                 int xp = (int) levelData.get("xp");
                 List<Map<String, Object>> rewards = (List<Map<String, Object>>) levelData.get("reward");
 
@@ -44,7 +48,7 @@ public class BattlePassConfigLoader {
                     int amount = (int) rewardData.get("amount");
 
                     Material material = Material.getMaterial(materialName);
-                    if (material != null){
+                    if (material != null) {
                         ItemStack rewardItem = new ItemStack(material, amount);
                         Reward reward = new Reward(xp, rewardItem, amount);
                         rewardsList.add(reward);
