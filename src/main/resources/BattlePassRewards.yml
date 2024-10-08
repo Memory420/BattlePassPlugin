@@ -1,0 +1,12 @@
+rewards:
+  levels:
+    1:
+      xp: 100
+      reward:
+        - material: APPLE
+          amount: 5
+    2:
+      xp: 140
+      reward:
+        - material: OAK_LOG
+          amount: 10
