@@ -50,6 +50,9 @@ public class BPCommand implements CommandExecutor, Listener {
                     player.sendMessage(ChatColor.AQUA + "/bp menu - Открывает BP меню");
                     player.sendMessage(ChatColor.AQUA + "/bp info - Отображает информацию о команде");
                     player.sendMessage(ChatColor.AQUA + "/bp help - Отображает справочник команды");
+                    player.sendMessage(ChatColor.AQUA + "/bp rewards - Отображает награды загруженного БП");
+                    player.sendMessage(ChatColor.AQUA + "/bp reload - Загружает файл с данными о наградах БП");
+
                     break;
 
                 case "rewards":
@@ -60,7 +63,14 @@ public class BPCommand implements CommandExecutor, Listener {
                     }
                     break;
                 case "reload":
-                    battlePassManager.getRewardList() =
+                    player.sendMessage("Загрузка наград БП...");
+                    battlePassManager.setRewardList(BattlePassConfigLoader.loadRewards("BattlePassRewards.yml"));
+                    player.sendMessage("Количество наград в текущем файле: " + battlePassManager.getRewardList().size());
+                    for (Reward reward : battlePassManager.getRewardList()){
+                        player.sendMessage("Lvl " + reward.level + " Item: " + reward.rewardItem + " Amount: " + reward.rewardAmount);
+                        player.sendMessage("------------------------------------");
+                    }
+                    break;
                 default:
                     player.sendMessage(ChatColor.RED + "Неизвестная подкоманда. Используйте /bp help для списка команд.");
                     break;
