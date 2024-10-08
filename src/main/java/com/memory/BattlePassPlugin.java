@@ -8,13 +8,18 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BattlePassPlugin extends JavaPlugin implements Listener {
+    private BattlePassManager battlePassManager;
 
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
+        getLogger().info("BattlePass plugin is running...");
+        battlePassManager = new BattlePassManager(BattlePassConfigLoader.loadRewards("BattlePassRewards.yml"));
+        getLogger().info(battlePassManager.listRewards());
+        getLogger().info("BP configuration loaded!");
         getCommand("bp").setExecutor(new BPCommand(this));
         getCommand("bp").setTabCompleter(new BPTabCompleter());
-        getLogger().info("BattlePassPlugin enabled!");
+
     }
 
 
