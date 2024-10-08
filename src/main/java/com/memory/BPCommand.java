@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
@@ -77,13 +78,14 @@ public class BPCommand implements CommandExecutor, Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         // Проверяем, что инвентарь - это наш кастомный инвентарь
         if (event.getView().getTitle().equals(ChatColor.GOLD + "Battle Pass Menu")) {
-            if (event.getClickedInventory() == event.getView().getTopInventory()) {
-                // Если игрок взаимодействует с кастомным инвентарем, отменяем все действия
-                event.setCancelled(true);
+            Inventory clickedInventory = event.getClickedInventory();
+            Player player = (Player) event.getWhoClicked();
 
-                Player player = (Player) event.getWhoClicked();
+            // Если игрок взаимодействует с кастомным инвентарем
+            if (clickedInventory != null && clickedInventory.equals(event.getView().getTopInventory())) {
+                event.setCancelled(true); // Отменяем все действия в кастомном инвентаре
+
                 ItemStack clickedItem = event.getCurrentItem();
-
                 if (clickedItem != null && clickedItem.getType() != Material.AIR) {
                     // Проверяем, какой предмет был нажат
                     switch (clickedItem.getType()) {
@@ -101,14 +103,22 @@ public class BPCommand implements CommandExecutor, Listener {
                             break;
                     }
                 }
-            } else if (event.getClick().isShiftClick()) {
-                // Предотвращаем перемещение предметов с помощью Shift + ЛКМ в кастомный инвентарь
-                if (event.getView().getTopInventory().equals(event.getClickedInventory())) {
+            } else if (clickedInventory != null && clickedInventory.equals(event.getView().getBottomInventory())) {
+                // Проверка для инвентаря игрока
+                if (event.getClick().isShiftClick() || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                    // Если игрок использует Shift-клик или перемещение в другой инвентарь, отменяем действие
                     event.setCancelled(true);
+                } else {
+                    // Разрешаем обычное взаимодействие, если это не связано с перемещением в кастомный инвентарь
+                    event.setCancelled(false);
                 }
             }
         }
     }
+
+
+
+
 
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
