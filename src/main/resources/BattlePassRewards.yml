@@ -15,3 +15,8 @@ rewards:
       reward:
         - material: DIAMOND
           amount: 5
+    4:
+      xp: 250
+      reward:
+        - material: COAL
+          amount: 8
